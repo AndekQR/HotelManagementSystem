@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <th:block th:include="/fragments/head.html :: head"/>
+</head>
+<body>
+
+<div th:replace="/fragments/header.html :: header"/>
+
+<section id="login" class="center-div center-div-horizontal center-div-vertical">
+    <div class="container">
+        <form action="/login" method="post" autocomplete="on">
+            <div>
+                <h1 class="heading h1-responsive center-div light-blue white-text card-header">LOGIN</h1>
+
+                <div class="p-3 form-group card card-block ">
+                    <p>
+                        <label for="username">Email</label>
+                        <input id="username" name="username" required type="email" placeholder="Enter email">
+                    </p>
+                    <p>
+                        <label for="password">Password</label>
+                        <input id="password" name="password" required type="password" placeholder="Enter password">
+                    </p>
+
+                    <div>
+                        <label>
+                            <input type="checkbox" id="rememberme" name="remember_me" class="custom-checkbox">
+                            Remember Me
+                        </label>
+                        <label class="float-right">
+                            <span class="text-accent-3">
+                                Not a member yet ? <a href="/register" class="to_register">Join us</a>
+                            </span>
+                        </label>
+                    </div>
+
+                    <p class="flex-center">
+                        <input class="btn btn-primary waves-button waves-light light-blue" type="submit" value="Login">
+                    </p>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+
+<th:block th:insert="/fragments/scripts.html :: my_scripts"/>
+</body>
+</html>

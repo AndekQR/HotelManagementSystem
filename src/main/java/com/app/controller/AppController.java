@@ -11,6 +11,6 @@ public class AppController {
 
     @RequestMapping(value={"/", "/home"})
     public String home(ModelMap model) {
-        return "index.html";
+        return "login";
     }
 }

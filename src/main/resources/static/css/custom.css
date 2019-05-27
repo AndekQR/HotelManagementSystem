@@ -1,0 +1,15 @@
+.center-div {
+    display: flex;
+    justify-content: center; /* for horizontal alignment */
+    align-items: center; /* for vertical alignment   */
+}
+
+.center-div-horizontal {
+    display: table;
+    margin: 0 auto;
+}
+
+.center-div-vertical {
+    display: flex;
+    align-items: center; /* for vertical alignment   */
+}

@@ -13,3 +13,8 @@
     display: flex;
     align-items: center; /* for vertical alignment   */
 }
+
+.background{
+    background: url(../images/full-bloom.png);
+
+}

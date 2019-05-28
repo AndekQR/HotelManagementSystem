@@ -10,31 +10,31 @@
 <div th:replace="/fragments/header.html :: header"/>
 
 <section class="center-div center-div-horizontal center-div-vertical" id="register">
-    <div class="container">
-        <form action="/register" id="regForm" method="post">
+    <div class="container" >
+        <form th:action="@{/register}" id="regForm" method="post" th:object="${user}">
             <h1 class="heading h1-responsive blue center-div white-text card-header">SIGN UP</h1>
 
             <div class="form-group card card-block p-3 ">
 
                 <div>
                     <label for="firstName">Your first name</label>
-                    <input id="firstName" placeholder="John" required="required" type="text"/>
+                    <input id="firstName" th:field="*{firstName}"  placeholder="John" required="required" type="text"/>
                 </div>
                 <div>
                     <label for="lastName">Your last name</label>
-                    <input id="lastName" placeholder="Doe" required="required" type="text"/>
+                    <input id="lastName" th:field="*{lastName}" placeholder="Doe" required="required" type="text"/>
                 </div>
                 <div>
                     <label data-icon="e" for="username">Your unique customer name</label>
-                    <input id="username" placeholder="johndoe_199x" required="required" type="text"/>
+                    <input id="username" th:field="*{uniqueName}" placeholder="johndoe_199x" required="required" type="text"/>
                 </div>
                 <div>
                     <label for="email">Your email</label>
-                    <input id="email" placeholder="johndoe_199x@mail.com" required="required" type="email"/>
+                    <input id="email" th:field="*{email}" placeholder="johndoe_199x@mail.com" required="required" type="email"/>
                 </div>
                 <div>
                     <label for="password">Your password </label>
-                    <input id="password" placeholder="Password" type="password"/>
+                    <input id="password" th:field="*{password}" placeholder="Password" type="password"/>
                 </div>
                 <div>
                     <label data-icon="p" for="confirmPassword">Please confirm your password </label>

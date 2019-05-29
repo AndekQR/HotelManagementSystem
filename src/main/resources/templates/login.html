@@ -43,7 +43,12 @@
             </div>
         </form>
 
-
+        <div th:if="${registerResult == 'success'}" class="alert alert-success" role="alert">
+            Rejestracja udana!
+        </div>
+        <div th:if="${registerResult == 'fail'}" class="alert alert-danger" role="alert">
+            Rejestracja nieudana!
+        </div>
 
     </div>
 </section>

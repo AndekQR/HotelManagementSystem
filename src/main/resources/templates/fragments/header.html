@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>head</title>
     <th:block th:include="head.html :: head"/>
@@ -21,25 +21,30 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/register">Rejestracja<span class="sr-only">(current)</span></a>
+                <li sec:authorize=" not isAuthenticated()" class="nav-item active">
+                    <a class="nav-link" href="/register">Registration<span class="sr-only">(current)</span></a>
+                </li>
+                <li sec:authorize="not isAuthenticated()" class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Rezerwacja</a>
+                    <a class="nav-link" href="#">Reservation</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ceny</a>
+                    <a class="nav-link" href="#">Prices</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Kontakt</a>
+                    <a class="nav-link" href="#">Contact</a>
                 </li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0" action="/login" method="post" autocomplete="on">
-                <input class="form-control mr-sm-2" type="email" placeholder="E-mail" required aria-label="E-mail">
-                <input class="form-control mr-sm-2" type="password" placeholder="Password" required aria-label="Password">
-                <button class="btn btn-primary btn-outline-success my-2" type="submit">Login</button>
-            </form>
+<!--            <div th:if="${#httpServletRequest.requestURI != '/login'}">-->
+<!--                <form  class="form-inline my-2 my-lg-0" action="/login" method="post" autocomplete="on">-->
+<!--                    <input class="form-control mr-sm-2" type="email" placeholder="E-mail" required aria-label="E-mail">-->
+<!--                    <input class="form-control mr-sm-2" type="password" placeholder="Password" required aria-label="Password">-->
+<!--                    <button class="btn btn-primary btn-outline-success my-2" type="submit">Login</button>-->
+<!--                </form>-->
+<!--            </div>-->
         </div>
     </nav>
 </header>

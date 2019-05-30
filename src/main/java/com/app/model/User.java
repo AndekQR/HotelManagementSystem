@@ -1,6 +1,7 @@
 package com.app.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 public class User {
@@ -19,6 +20,24 @@ public class User {
     private String email;
     @Column(name="PASSWORD")
     private String password;
+
+
+
+    public Collection<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Collection<Authority> authorities) {
+        this.authorities=authorities;
+    }
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinTable(name="user_authority",
+    joinColumns={@JoinColumn(name="user_id")},
+    inverseJoinColumns={@JoinColumn(name="authority_id")})
+    private Collection<Authority> authorities;
+
+
 
     public void setId(Integer id) {
         this.id=id;

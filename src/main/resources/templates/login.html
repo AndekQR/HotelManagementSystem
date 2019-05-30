@@ -12,7 +12,7 @@
 
 <section id="login" class="center-div center-div-horizontal center-div-vertical">
     <div class="container">
-        <form action="/login" method="post" autocomplete="on">
+        <form th:action="@{/login}" method="post" autocomplete="on">
             <div>
                 <h1 class="heading h1-responsive center-div light-blue white-text card-header">LOGIN</h1>
 
@@ -44,10 +44,10 @@
         </form>
 
         <div th:if="${registerResult == 'success'}" class="alert alert-success" role="alert">
-            Rejestracja udana!
+            Registration complete!
         </div>
         <div th:if="${registerResult == 'fail'}" class="alert alert-danger" role="alert">
-            Rejestracja nieudana!
+            Registration error!
         </div>
 
     </div>

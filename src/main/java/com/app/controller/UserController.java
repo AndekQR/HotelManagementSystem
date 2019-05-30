@@ -1,7 +1,7 @@
 package com.app.controller;
 
 import com.app.model.User;
-import com.app.service.UserService;
+import com.app.service.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,11 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService=userService;
+    public UserController(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl=userServiceImpl;
     }
 
     @RequestMapping(value="/login", method=RequestMethod.GET)
@@ -31,7 +31,7 @@ public class UserController {
 
     @RequestMapping(value="/register", method=RequestMethod.GET)
     public String registerPane(Model model){
-        User user = userService.newUser();
+        User user = userServiceImpl.newUser();
         model.addAttribute("user", user);
         return "register";
     }
@@ -40,9 +40,9 @@ public class UserController {
     public String saveUser(@ModelAttribute User user, RedirectAttributes redirectAttributes){
         String result = "fail";
 
-        if (userService.isEmailUnique(user.getEmail()))
-            if (userService.isUniqueNameIsUnique(user.getUniqueName())){
-                userService.saveUser(user);
+        if (userServiceImpl.isEmailUnique(user.getEmail()))
+            if (userServiceImpl.isUniqueNameIsUnique(user.getUniqueName())){
+                userServiceImpl.save(user);
                 result = "success";
                 redirectAttributes.addFlashAttribute("registerResult", result);
                 return "redirect:/login";
@@ -51,4 +51,9 @@ public class UserController {
         redirectAttributes.addFlashAttribute("registerResult", result);
         return "redirect:/login";
     }
+
+//    @RequestMapping(value="/login", method=RequestMethod.POST)
+//    public String login(){
+//
+//    }
 }

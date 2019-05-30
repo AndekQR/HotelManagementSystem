@@ -10,29 +10,29 @@
 
 <div th:replace="/fragments/header.html :: header"/>
 
-<section id="login" class="center-div center-div-horizontal center-div-vertical">
+<section class="center-div center-div-horizontal center-div-vertical" id="login">
     <div class="container">
-        <form th:action="@{/login}" method="post" autocomplete="on">
+        <form autocomplete="on" method="post" th:action="@{/login}">
             <div>
                 <h1 class="heading h1-responsive center-div light-blue white-text card-header">LOGIN</h1>
 
                 <div class="p-3 form-group card card-block ">
                     <p>
                         <label for="username">Email</label>
-                        <input id="username" name="username" required type="email" placeholder="Enter email">
+                        <input id="username" name="username" placeholder="Enter email" required type="email">
                     </p>
                     <p>
                         <label for="password">Password</label>
-                        <input id="password" name="password" required type="password" placeholder="Enter password">
+                        <input id="password" name="password" placeholder="Enter password" required type="password">
                     </p>
 
                     <div class="">
 
-                            <input  type="checkbox" id="rememberme" name="remember_me" class="custom-checkbox">
-                            <label for="rememberme">Remember Me</label>
+                        <input class="custom-checkbox" id="rememberme" name="remember_me" type="checkbox">
+                        <label for="rememberme">Remember Me</label>
 
                         <label class="float-right">
-                                <span>Not a member yet? </span> <a href="/register" class="to_register">Join us</a>
+                            <span>Not a member yet? </span> <a class="to_register" href="/register">Join us</a>
                         </label>
                     </div>
 
@@ -43,11 +43,18 @@
             </div>
         </form>
 
-        <div th:if="${registerResult == 'success'}" class="alert alert-success" role="alert">
+        <div class="alert alert-success" role="alert" th:if="${registerResult == 'success'}">
             Registration complete!
         </div>
-        <div th:if="${registerResult == 'fail'}" class="alert alert-danger" role="alert">
+        <div class="alert alert-danger" role="alert" th:if="${registerResult == 'fail'}">
             Registration error!
+        </div>
+        <div th:if="${param.error}">
+            <div class="alert alert-danger">Invalid username or password.
+            </div>
+        </div>
+        <div th:if="${param.logout}">
+            <div class="alert alert-info">You have been logged out.</div>
         </div>
 
     </div>

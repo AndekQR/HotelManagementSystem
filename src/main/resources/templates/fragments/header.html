@@ -37,6 +37,11 @@
                     <a class="nav-link" href="#">Contact</a>
                 </li>
             </ul>
+            <div th:class="float-lg-right" sec:authorize="isAuthenticated()" id="navbar" class="collapse navbar-collapse">
+                <form class="form-inline my-2 my-lg-0" th:action="@{/logout}">
+                    <button class="btn waves-button waves-light light-blue">Logout</button>
+                </form>
+            </div>
 
 <!--            <div th:if="${#httpServletRequest.requestURI != '/login'}">-->
 <!--                <form  class="form-inline my-2 my-lg-0" action="/login" method="post" autocomplete="on">-->

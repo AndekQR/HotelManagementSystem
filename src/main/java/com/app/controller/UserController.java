@@ -51,9 +51,4 @@ public class UserController {
         redirectAttributes.addFlashAttribute("registerResult", result);
         return "redirect:/login";
     }
-
-//    @RequestMapping(value="/login", method=RequestMethod.POST)
-//    public String login(){
-//
-//    }
 }

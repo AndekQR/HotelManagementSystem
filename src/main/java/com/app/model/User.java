@@ -31,7 +31,7 @@ public class User {
         this.authorities=authorities;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
     @JoinTable(name="user_authority",
     joinColumns={@JoinColumn(name="user_id")},
     inverseJoinColumns={@JoinColumn(name="authority_id")})

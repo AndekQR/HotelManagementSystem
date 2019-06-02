@@ -8,57 +8,125 @@
 </head>
 <body class="background">
 <div th:replace="/fragments/header.html :: header"/>
-
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-3">Hotel!</h1>
-        <p>Designed for natural living.</p>
-        </div>
-</div>
-
-<div sec:authorize="isAuthenticated()" class="card card-custom bg-white border-white">
-    <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"></div>
-    <div class="card-custom-avatar">
-        <img class="img-fluid" src="http://res.cloudinary.com/d3/image/upload/c_pad,g_center,h_200,q_auto:eco,w_200/bootstrap-logo_u3c8dx.jpg" alt="Avatar" />
-    </div>
-    <div class="card-body" style="overflow-y: auto">
-        <h4 class="card-title">Card title</h4>
-        <p class="card-text">Cards have minimum height set. You can use Bootstrap <a href="https://getbootstrap.com/docs/4.0/components/card/#card-decks">card-decks</a> to align them nicely in a row.</p>
-    </div>
-    <div class="card-footer" style="background: inherit; border-color: inherit;">
-        <a href="#" class="btn btn-primary">Option</a>
-        <a href="#" class="btn btn-outline-primary">Other option</a>
-    </div>
-</div>
-
-<div class="album text-muted">
 <div class="container">
-    <div class="row d-flex justify-content-center ">
-        <div class="card m-3" style="width: 20rem;">
-            <img class="card-img-top" th:src="@{/images/hotel.jpg}" alt="hotel image">
-            <div class="card-body light-blue white-text">
-                <p class="card-text">FACEBOOK</p>
-            </div>
-        </div>
-        <div class="card m-3" style="width: 20rem;">
-            <img class="card-img-top" th:src="@{/images/hotel.jpg}" alt="hotel image">
-            <div class="card-body light-blue white-text">
-                <p class="card-text">FACEBOOK</p>
-            </div>
-        </div>
-        <div class="card m-3" style="width: 20rem;">
-            <img class="card-img-top" th:src="@{/images/hotel.jpg}" alt="hotel image">
-            <div class="card-body light-blue white-text" >
-                <p class="card-text">FACEBOOK</p>
-            </div>
+
+    <div class="jumbotron row">
+        <div class="container">
+            <h1 class="display-3">Hotel!</h1>
+            <p>Designed for natural living.</p>
         </div>
     </div>
+<!--    po zalogowaniu jako user-->
+
+    <div sec:authorize="hasRole('ROLE_USER')" id="booking" class="section">
+            <div class="section-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="booking-form">
+                            <div class="form-header">
+                                <h1>Make your reservation</h1>
+                            </div>
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Check In</span>
+                                            <input class="form-control" type="date" required>
+                                        </div>
+                                        <span class="in-out hidden-xs hidden-sm">&#8652;</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Check out</span>
+                                            <input class="form-control" type="date" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <span class="form-label">Number of rooms</span>
+                                            <select class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                            <span class="select-arrow"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-btn">
+                                            <button class="submit-btn">Check availability</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--   po zalogowaniu  jako admin-->
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="row justify-content-center">
+        <div class="card text-white bg-primary m-2 col-md-4" style="max-width: 18rem;">
+            <div class="card-body">
+                <h1 class="card-title btn waves-button waves-light btn-lg">Reservation</h1>
+                <hr>
+                <p class="card-text">Select from a wide selection of over 50 rooms in the hotel.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary m-2 col-md-4" style="max-width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title btn waves-button waves-light btn-lg">Secondary card title</h5>
+                <hr>
+                <p class="card-text">Quick sample text to create the card title and make up the body of the card's
+                    content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-success m-2 col-md-4" style="max-width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title btn waves-button waves-light btn-lg">Secondary card title</h5>
+                <hr>
+                <p class="card-text">Quick sample text to create the card title and make up the body of the card's
+                    content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-danger m-2 col-md-4" style="max-width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title btn waves-button waves-light btn-lg">Secondary card title</h5>
+                <hr>
+                <p class="card-text">Quick sample text to create the card title and make up the body of the card's
+                    content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-warning m-2 col-md-4" style="max-width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title btn waves-button waves-light btn-lg">Secondary card title</h5>
+                <hr>
+                <p class="card-text">Quick sample text to create the card title and make up the body of the card's
+                    content.</p>
+            </div>
+        </div>
+        <div class="card text-white bg-info m-2 col-md-4" style="max-width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title btn waves-button waves-light btn-lg">Secondary card title</h5>
+                <hr>
+                <p class="card-text">Quick sample text to create the card title and make up the body of the card's
+                    content.</p>
+            </div>
+        </div>
+
+    </div>
+
 
     <hr>
     <footer>
         <p>&copy; Company 2019</p>
     </footer>
-</div>
 </div>
 
 <th:block th:insert="/fragments/scripts.html :: my_scripts"/>

@@ -38,37 +38,9 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
         this.authorityService = authorityService;
 
-        initializeDataInTables();
     }
 
-    private void initializeDataInTables(){
-        if (authorityService.findByType(AuthorityType.ROLE_ADMIN) == null && authorityService.findByType(AuthorityType.ROLE_USER) == null){
-            authorityService.saveAuthority(authorityService.newAuthority(AuthorityType.ROLE_USER));
-            authorityService.saveAuthority(authorityService.newAuthority(AuthorityType.ROLE_ADMIN));
-        }
 
-        if (findByEmail("admin@mail.com") == null){
-            User user = newUser();
-            user.setFirstName("admin");
-            user.setLastName("admin");
-            user.setUniqueName("admin");
-            user.setEmail("admin@mail.com");
-            user.setPassword(passwordEncoder.encode("admin"));
-            user.setAuthorities(Arrays.asList(authorityService.newAuthority(AuthorityType.ROLE_ADMIN)));
-            daoUser.save(user);
-        }
-        if (findByEmail("johndoe_199x@mail.com") == null){
-            User user = newUser();
-            user.setFirstName("John");
-            user.setLastName("Doe");
-            user.setUniqueName("johndoe");
-            user.setEmail("johndoe_199x@mail.com");
-            user.setPassword(passwordEncoder.encode("j"));
-            user.setAuthorities(Arrays.asList(authorityService.newAuthority(AuthorityType.ROLE_USER)));
-            daoUser.save(user);
-        }
-
-    }
 
     public User findById(final int id){
         Optional<User> tmp = daoUser.findById(id);

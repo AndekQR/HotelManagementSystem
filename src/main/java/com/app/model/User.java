@@ -3,6 +3,10 @@ package com.app.model;
 import javax.persistence.*;
 import java.util.Collection;
 
+/*Jeżeli będzie wyjątek o nie rozpoznanej strefie czasowej
+* to w mySQL trzeba wykonać:
+* SET GLOBAL time_zone = '+1:00';*/
+
 @Entity
 public class User {
 

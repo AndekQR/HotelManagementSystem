@@ -20,10 +20,13 @@ import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
+    private final AuthenticationSuccessHandler successHandler;
 
     @Autowired
-    public SecurityConfiguration(@Lazy UserService userService) {
+    public SecurityConfiguration(@Lazy UserService userService, AuthenticationSuccessHandler successHandler) {
+
         this.userService=userService;
+        this.successHandler = successHandler;
     }
 
     @Bean
@@ -45,7 +48,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**", "/images/**", "/css/**", "/font/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .oauth2Login()
+                .and()
                 .formLogin()
+                .successHandler(successHandler)
                 .loginPage("/login")
                 .permitAll()
                 .and()
@@ -74,4 +80,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
+
+
 }

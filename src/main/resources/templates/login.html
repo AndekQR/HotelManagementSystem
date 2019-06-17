@@ -42,6 +42,9 @@
                 </div>
             </div>
         </form>
+        <form th:action="@{/oauth2/code/google}" method="post">
+            <input class="btn btn-primary waves-button waves-light btn-orange" type="submit" value="Login with Google">
+        </form>
 
         <div class="alert alert-success" role="alert" th:if="${registerResult == 'success'}">
             Registration complete!

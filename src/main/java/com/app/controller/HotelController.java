@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -61,35 +62,48 @@ public class HotelController {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @RequestMapping(value="/booking", method=RequestMethod.POST)
-    public String saveBooking(@ModelAttribute Room wantedRoomData, @ModelAttribute Booking booking){
+    public String saveBooking(@ModelAttribute Room wantedRoomData, @ModelAttribute Booking booking, RedirectAttributes redirectAttributes){
         Room roomToTake;
         Booking bookingToTake = new Booking();
+        String result = "fail";
+        String description;
 
-        List<Room> freeRooms = roomService.findFreeRooms();
+        List<Room> freeRooms = roomService.findAllRooms();
         roomToTake = freeRooms.stream().filter(x ->
-                (x.getCapacity() >= booking.getPeople()) &&
-                        (x.getNumberBeds() >= wantedRoomData.getNumberBeds()) &&
-                        (x.getInternet() == wantedRoomData.getInternet()) &&
-                        (x.getNumberOfBath() >=wantedRoomData.getNumberOfBath())
-        ).findFirst().get();
+                (x.getCapacity().equals(booking.getPeople())) &&
+                (x.getNumberBeds().equals(wantedRoomData.getNumberBeds())) &&
+                (x.getInternet() == wantedRoomData.getInternet()) &&
+                (x.getNumberOfBath().equals(wantedRoomData.getNumberOfBath()))
+        ).findFirst().orElse(null);
 
-        logger.info("pokoj: "+roomToTake.getName());
+        if (roomToTake == null){
+            description = "No room with the given parameters.";
+            redirectAttributes.addFlashAttribute("result", result);
+            redirectAttributes.addFlashAttribute("description", description);
+            return "redirect:/booking";
+        }
+
+        if (!bookingService.checkRoomBookAble(booking.getArrivalTime(), booking.getDepartureTime(), roomToTake)){
+            description = "The selected date is taken.";
+            redirectAttributes.addFlashAttribute("result", result);
+            redirectAttributes.addFlashAttribute("description", description);
+            return "redirect:/booking";
+        }
 
         User loggedUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         com.app.model.User user = userService.findByEmail(loggedUser.getUsername());
-
-        logger.info("ilosc osob: "+ booking.getPeople());
-        logger.info("data arrvial time: "+booking.getArrivalTime());
-        logger.info("wynajety: "+ roomService.findByName(roomToTake.getName()).getName());
 
         bookingToTake.setUser(user);
         bookingToTake.setRoom(roomService.findByName(roomToTake.getName()));
         bookingToTake.setPeople(booking.getPeople());
         bookingToTake.setArrivalTime(booking.getArrivalTime());
         bookingToTake.setDepartureTime(booking.getDepartureTime());
-
-
         bookingService.saveBooking(bookingToTake);
-        return "login";
+
+        result = "success";
+        description = "The room has been booked.";
+        redirectAttributes.addFlashAttribute("result", result);
+        redirectAttributes.addFlashAttribute("description", description);
+        return "redirect:/booking";
     }
 }

@@ -22,6 +22,9 @@ public class RoomService {
        return room.orElse(null);
     }
 
+
+    public Room findById(int id){return daoRoom.findById(id).orElse(null);}
+
     public List<Room> findByPrice(int price){
         return daoRoom.findByPrice(price).orElse(null);
     }

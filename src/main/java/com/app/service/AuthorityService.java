@@ -23,7 +23,7 @@ public class AuthorityService {
         daoAuthority.save(authority);
     }
 
-    public Authority newAuthority(AuthorityType type){
+    public Authority createOrGetAuthority(AuthorityType type){
         Authority authority = findByType(type);
         if (authority == null)
             authority = new Authority(type);

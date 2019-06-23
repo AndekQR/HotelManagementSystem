@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -90,8 +90,16 @@ public class HotelController {
             return "redirect:/booking";
         }
 
-        User loggedUser =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        com.app.model.User user = userService.findByEmail(loggedUser.getUsername());
+
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        com.app.model.User user = userService.findByEmail(username);
 
         bookingToTake.setUser(user);
         bookingToTake.setRoom(roomService.findByName(roomToTake.getName()));

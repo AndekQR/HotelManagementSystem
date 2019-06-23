@@ -36,15 +36,21 @@
                         </label>
                     </div>
 
-                    <p class="flex-center">
+                <div class="flex-center">
+                    <p>
                         <input class="btn btn-primary waves-button waves-light light-blue" type="submit" value="Login">
                     </p>
+                    <a href="/facebooklogin" th:href="@{/facebooklogin}">
+                        <button type="button" class="loginBtn loginBtn--facebook">
+                            Login with Facebook
+                        </button>
+                    </a>
+                </div>
                 </div>
             </div>
         </form>
-        <form th:action="@{/oauth2/code/google}" method="post">
-            <input class="btn btn-primary waves-button waves-light btn-orange" type="submit" value="Login with Google">
-        </form>
+
+
 
         <div class="alert alert-success" role="alert" th:if="${registerResult == 'success'}">
             Registration complete!

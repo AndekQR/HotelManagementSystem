@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,12 +21,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private final AuthenticationSuccessHandler successHandler;
+    private final AuthenticationFailureHandler failureHandler;
+
 
     @Autowired
-    public SecurityConfiguration(@Lazy UserService userService, AuthenticationSuccessHandler successHandler) {
+    public SecurityConfiguration(
+            @Lazy UserService userService,
+            AuthenticationSuccessHandler successHandler,
+            AuthenticationFailureHandler failureHandler) {
 
         this.userService=userService;
         this.successHandler = successHandler;
+        this.failureHandler=failureHandler;
+
+
     }
 
     @Bean
@@ -42,16 +50,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
+                .antMatchers("/facebooklogin", "/facebookprofiledata/**", "/facebook").permitAll()
+                .antMatchers("/error").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/js/**", "/images/**", "/css/**", "/font/**").permitAll()
                 .anyRequest().authenticated()
-//                .and()
-//                .oauth2Login()
                 .and()
                 .formLogin()
                 .successHandler(successHandler)
+                .failureHandler(failureHandler)
                 .loginPage("/login")
                 .permitAll()
                 .and()
@@ -76,10 +86,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return auth;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(authenticationProvider());
-    }
+//facebook
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
 }

@@ -7,6 +7,7 @@ import com.app.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service("userService")
+@Qualifier("myUserDetails")
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -60,12 +62,18 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void save(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setAuthorities(Arrays.asList(authorityService.newAuthority(AuthorityType.ROLE_USER)));
+        if (user.getPassword() != null){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }//else facebook user with password equals null
+
+        user.setAuthorities(Arrays.asList(authorityService.createOrGetAuthority(AuthorityType.ROLE_USER)));
         daoUser.save(user);
     }
 
-
+    @Override
+    public void update(User user) {
+        daoUser.save(user);
+    }
 
     public void deleteByUniqueName(final String uniqueName){
         daoUser.deleteByUniqueName(uniqueName);

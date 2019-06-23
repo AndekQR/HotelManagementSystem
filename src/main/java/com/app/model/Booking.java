@@ -3,10 +3,11 @@ package com.app.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Booking {
+public class Booking implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

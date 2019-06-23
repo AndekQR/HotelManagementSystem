@@ -3,11 +3,12 @@ package com.app.model;
 import com.app.helpers.RoomTypeEnum;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class RoomType {
+public class RoomType implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

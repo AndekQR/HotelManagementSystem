@@ -3,9 +3,10 @@ package com.app.model;
 import com.app.helpers.AuthorityType;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Authority {
+public class Authority implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

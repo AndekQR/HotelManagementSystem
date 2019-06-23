@@ -37,8 +37,8 @@ public class InitializeTables {
 
     private void initialize(){
         if (authorityService.findByType(AuthorityType.ROLE_ADMIN) == null && authorityService.findByType(AuthorityType.ROLE_USER) == null){
-            authorityService.saveAuthority(authorityService.newAuthority(AuthorityType.ROLE_USER));
-            authorityService.saveAuthority(authorityService.newAuthority(AuthorityType.ROLE_ADMIN));
+            authorityService.saveAuthority(authorityService.createOrGetAuthority(AuthorityType.ROLE_USER));
+            authorityService.saveAuthority(authorityService.createOrGetAuthority(AuthorityType.ROLE_ADMIN));
         }
 
         if (userService.findByEmail("admin@mail.com") == null){
@@ -48,7 +48,7 @@ public class InitializeTables {
             user.setUniqueName("admin");
             user.setEmail("admin@mail.com");
             user.setPassword(passwordEncoder.encode("admin"));
-            user.setAuthorities(Arrays.asList(authorityService.newAuthority(AuthorityType.ROLE_ADMIN)));
+            user.setAuthorities(Arrays.asList(authorityService.createOrGetAuthority(AuthorityType.ROLE_ADMIN)));
             daoUser.save(user);
         }
         if (userService.findByEmail("johndoe_199x@mail.com") == null){
@@ -58,7 +58,7 @@ public class InitializeTables {
             user.setUniqueName("johndoe");
             user.setEmail("johndoe_199x@mail.com");
             user.setPassword(passwordEncoder.encode("j"));
-            user.setAuthorities(Arrays.asList(authorityService.newAuthority(AuthorityType.ROLE_USER)));
+            user.setAuthorities(Arrays.asList(authorityService.createOrGetAuthority(AuthorityType.ROLE_USER)));
             daoUser.save(user);
         }
 

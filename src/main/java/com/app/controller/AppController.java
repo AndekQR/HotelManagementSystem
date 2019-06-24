@@ -11,5 +11,10 @@ public class AppController {
         return "index";
     }
 
+    @RequestMapping(value={"/contact", "/contact"})
+    public String contact(ModelMap model) {
+        return "contact";
+    }
+
 
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <th:block th:include="/fragments/head.html :: head"/>
+</head>
+<body class="background">
+
+<div th:replace="/fragments/header.html :: header"/>
+
+<section class="center-div center-div-horizontal center-div-vertical" id="contact">
+    <div class="jumbotron row">
+    <div class="container">
+        <h2><strong>Hotel!</strong></h2>
+        <p>ul. Zytnia 22,</p>
+        <p>24-065 Kielce, Polska</p>
+        <div class="panel-group" id="accordion">
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Reception</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <p>reception@hotelkielce.pl</p>
+                        <p>+48 58 886 80 00</p>
+                        <p>+48 58 886 80 01</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                            Service for business clients, meetings and events</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>mice@hotelkielce.pl</p>
+                        <p>+48 82 886 80 80</p>
+                        <p>+48 712 020 445</p>
+                        <p>+48 672 803 530</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                            Handling individual reservationsh</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>reservation@hotelkielce.pl</p>
+                        <p>+48 58 886 80 03</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Marketing</a>
+                    </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>marketing@hotelkielce.pl</p>
+                        <p>+48 58 886 81 04</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+<th:block th:insert="/fragments/scripts.html :: my_scripts"/>
+</body>
+</html>

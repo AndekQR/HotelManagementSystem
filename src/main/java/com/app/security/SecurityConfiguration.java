@@ -53,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
+                .antMatchers("/contact", "/contact").permitAll()
                 .antMatchers("/facebooklogin", "/facebookprofiledata/**", "/facebook").permitAll()
                 //.antMatchers("/pay/success","/pay/cancel").permitAll()
                 .antMatchers("/error").permitAll()

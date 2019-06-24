@@ -11,9 +11,14 @@ public class AppController {
         return "index";
     }
 
-    @RequestMapping(value={"/contact", "/contact"})
+    @RequestMapping(value={"/contact"})
     public String contact() {
         return "contact";
+    }
+
+    @RequestMapping(value={"/prices"})
+    public String prices() {
+        return "prices";
     }
 
 

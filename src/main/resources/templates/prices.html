@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Prices</title>
+    <th:block th:include="/fragments/head.html :: head"/>
+
+</head>
+<body class="background">
+
+<div th:replace="/fragments/header.html :: header"/>
+
+<section class="center-div center-div-horizontal center-div-vertical" id="prices">
+    <div class="jumbotron row">
+    <div class="container">
+        <h2><strong>Hotel!</strong></h2>
+        <p>ul. Zytnia 22,</p>
+        <p>24-065 Kielce, Polska</p>
+
+        <div id="demo" class="carousel slide" data-ride="carousel">
+
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/static/images/test.jpg" th:src="@{/images/test.jpg}" alt="Los Angeles" style="width:100%;">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/images/test.jpg" th:src="@{/images/test.jpg}" alt="Chicago" style="width:100%;">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/images/test.jpg" th:src="@{/images/test.jpg}" alt="New York" width="1100" height="500">
+                </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+
+
+
+
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Reception</a>
+                    </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        ttt
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                            Service for business clients, meetings and events</a>
+                    </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>mice@hotelkielce.pl</p>
+                        <p>+48 82 886 80 80</p>
+                        <p>+48 712 020 445</p>
+                        <p>+48 672 803 530</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                            Handling individual reservationsh</a>
+                    </h4>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>reservation@hotelkielce.pl</p>
+                        <p>+48 58 886 80 03</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Marketing</a>
+                    </h4>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>marketing@hotelkielce.pl</p>
+                        <p>+48 58 886 81 04</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+<th:block th:insert="/fragments/scripts.html :: my_scripts"/>
+</body>
+</html>

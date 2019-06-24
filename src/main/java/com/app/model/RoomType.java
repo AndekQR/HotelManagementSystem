@@ -32,4 +32,8 @@ public class RoomType implements Serializable {
 
     public RoomType(){}
 
+    @Override
+    public String toString() {
+        return type.toString();
+    }
 }

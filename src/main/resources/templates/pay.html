@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pay</title>
+    <th:block th:include="/fragments/head.html :: head"/>
+</head>
+<body class="background">
+<div th:replace="/fragments/header.html :: header"/>
+
+<div class="container">
+    <!--    <div class="row alert alert-danger" role="alert" th:if="${result == 'fail'}">-->
+    <!--        <span th:text="${description}"></span>-->
+    <!--    </div>-->
+    <!--    <div class="row alert alert-success" role="alert" th:if="${result == 'success'}">-->
+    <!--        <span th:text="${description}"></span>-->
+    <!--    </div>-->
+
+    <!--                th:if="${room != null && book != null}"-->
+    <!--                znaleziony pokój-->
+    <form th:action="@{/pay}" method="post" th:object="${book}">
+        <div class="row">
+            <div class="col-md-12" th:if="${room != null && book != null}">
+                <div class="card border-success mb-3">
+                    <div class="card-header bg-transparent border-success" th:text="${room.type.toString()}"></div>
+                    <div class="card-body text-success">
+                        <span>Room number: </span><span th:text="${room.name}"></span><br>
+                        <span>Capacity:  </span><span th:text="${room.capacity}"></span><br>
+                        <span>Number of beds:  </span><span th:text="${room.numberBeds}"></span><br>
+                        <span>Number of batches:  </span><span th:text="${room.numberOfBath}"></span><br>
+                        <span>Internet:  </span><span th:if="${room.internet == true}" th:text="available"></span>
+                        <span th:if="${room.internet == false}" th:text="unavailable"></span><br>
+
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-12" th:if="${room != null && book != null}">
+                <div class="card border-success mb-3 ">
+                    <div class="card-header bg-transparent border-success" th:text="Summary"></div>
+                    <div class="card-body text-success">
+                        <span>Base price: </span><span th:text="${room.price}+' PLN'"></span><br>
+                        <span>Type of room price:  </span>
+                        <th:block th:switch="${room.type.toString()}">
+                            <span th:case="NORMAL" th:text="${price.normal}+' PLN'"></span>
+                            <span th:case="APARTMENT" th:text="${price.apartment}+' PLN'"></span>
+                            <span th:case="EXCLUSIVE" th:text="${price.exclusive}+' PLN'"></span>
+                        </th:block>
+                        <br>
+                        <span>Beds price:  </span><span
+                            th:text="${room.numberBeds} + '*' + ${price.bed} +' PLN'+ '=' + ${room.numberBeds * price.bed}+' PLN'"></span><br>
+                        <span>Number of batches:  </span><span
+                            th:text="${room.numberOfBath}+'*'+${price.batch}+' PLN'+'='+${room.numberOfBath * price.batch}+' PLN'"></span><br>
+                        <span th:if="${room.internet == true}">Internet:  </span><span th:if="${room.internet == true}"
+                                                      th:text="${price.internet}+' PLN'"></span><br><br>
+                        <span>Total: <span th:text="${total}+' PLN'"></span></span>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <input type="hidden" name="id" th:value="${book.id}"/>
+
+        <button class="paypal-button" type="submit">
+                        <span class="paypal-button-title">
+                            Check out with
+                        </span>
+            <span class="paypal-logo">
+                            <i>Pay</i><i>Pal</i>
+                        </span>
+        </button>
+    </form>
+
+
+</div>
+
+
+<th:block th:insert="/fragments/scripts.html :: my_scripts"/>
+</body>
+</html>

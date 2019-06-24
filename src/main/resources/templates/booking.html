@@ -10,25 +10,27 @@
 <div th:replace="/fragments/header.html :: header"/>
 
 <div class="container">
-    <div id="booking" class="d-flex justify-content-center col-md-12" >
+    <div class="d-flex justify-content-center col-md-12" id="booking">
         <div class="d-flex justify-content-center col-md-12">
             <div class="booking-form">
                 <div class="form-header">
                     <h1>Make your reservation</h1>
                 </div>
-                <form th:action="@{/booking}" id="bookingId" method="post">
+                <form id="bookingId" method="post" th:action="@{/booking}">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label">Check In</span>
-                                <input th:value="${booking.arrivalTime}" name="arrivalTime" type="date" required>
+                                <input class="form-control" name="arrivalTime" required
+                                       th:value="${booking.arrivalTime}" type="date">
                             </div>
                             <span class=" in-out d-none d-md-block">&#8652;</span>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label">Check out</span>
-                                <input th:value="${booking.departureTime}" name="departureTime" class="form-control" type="date" required>
+                                <input class="form-control" name="departureTime" required
+                                       th:value="${booking.departureTime}" type="date">
                             </div>
                         </div>
                     </div>
@@ -36,8 +38,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label">Number of persons</span>
-                                <select th:field="*{booking.people}" class="form-control">
-                                    <option th:value="1" >One</option>
+                                <select class="form-control" th:field="*{booking.people}">
+                                    <option th:value="1">One</option>
                                     <option th:value="2">Two</option>
                                     <option th:value="3">Three</option>
                                     <option th:value="4">Four</option>
@@ -49,7 +51,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label">Number of beds</span>
-                                <select th:field="*{room.numberBeds}" class="form-control">
+                                <select class="form-control" th:field="*{room.numberBeds}">
                                     <option th:value="1">One</option>
                                     <option th:value="2">Two</option>
                                     <option th:value="3">Three</option>
@@ -64,7 +66,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label">Internet</span>
-                                <select th:field="*{room.internet}" class="form-control">
+                                <select class="form-control" th:field="*{room.internet}">
                                     <option th:value="true">Required</option>
                                     <option th:value="false">Not required</option>
                                 </select>
@@ -74,7 +76,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label">Number of baths</span>
-                                <select th:field="*{room.numberOfBath}" class="form-control">
+                                <select class="form-control" th:field="*{room.numberOfBath}">
                                     <option th:value="1">One</option>
                                     <option th:value="2">Two</option>
                                     <option th:value="3">Three</option>
@@ -85,23 +87,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row center-div center-div-horizontal">
+                    <div class="row float-md-right col-md-6">
                         <p class="flex-center">
-                            <input class="btn btn-primary waves-button waves-light light-blue" type="submit" value="Check rooms">
+                            <input class="btn btn-primary waves-button waves-light light-blue" type="submit"
+                                   value="Search for the room">
                         </p>
                     </div>
                 </form>
-                <div class="alert alert-danger" role="alert" th:if="${result == 'fail'}">
+                <div class="row alert alert-danger" role="alert" th:if="${result == 'fail'}">
                     <span th:text="${description}"></span>
                 </div>
-                <div class="alert alert-success" role="alert" th:if="${result == 'success'}">
+                <div class="row alert alert-success" role="alert" th:if="${result == 'success'}">
                     <span th:text="${description}"></span>
                 </div>
-            </div>
-        </div>
 
+            </div>
+
+
+        </div>
     </div>
+
 </div>
+
 
 <th:block th:insert="/fragments/scripts.html :: my_scripts"/>
 </body>

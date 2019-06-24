@@ -51,12 +51,12 @@ public class Booking implements Serializable {
 
     @Override
     public int hashCode() {
-        int result=id.hashCode();
-        result=31 * result + user.hashCode();
-        result=31 * result + room.hashCode();
-        result=31 * result + people.hashCode();
-        result=31 * result + arrivalTime.hashCode();
-        result=31 * result + departureTime.hashCode();
+        int result= ((id == null)?0:id.hashCode()); //delete? id
+        result=31 * result + ((user == null)?0:user.hashCode());
+        result=31 * result + ((room == null)?0:room.hashCode());
+        result=31 * result + ((people == null)?0:people.hashCode());
+        result=31 * result + ((arrivalTime == null)?0:arrivalTime.hashCode());
+        result=31 * result + ((departureTime == null)?0:departureTime.hashCode());
         return result;
     }
 

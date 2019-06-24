@@ -17,6 +17,10 @@ public class BookingService {
         this.daoRepository=daoRepository;
     }
 
+    public Booking findById(int id){
+        return daoRepository.findById(id).orElse(null);
+    }
+
     public List<Booking> findByUserId(final int id){
         return daoRepository.findByUserId(id).orElse(null);
     }
@@ -28,6 +32,10 @@ public class BookingService {
     public boolean deleteByRoomId(final int id){
         daoRepository.deleteByRoomId(id);
         return findByRoomId(id) == null;
+    }
+
+    public void deleteById(int id){
+        daoRepository.deleteById(id);
     }
 
     public boolean deleteByUserId(final int id){
@@ -44,7 +52,7 @@ public class BookingService {
     }
 
     public boolean checkRoomBookAble(final Date arrivalTime, final Date departureTime, final Room room){
-        if (departureTime.before(arrivalTime))
+        if (departureTime.before(arrivalTime) || (arrivalTime.before(new Date()))) //new Date zwraca date która jest zainicjalizowana na teraz
             return false;
 
         List<Booking> currentBooking = findByRoomId(room.getId());

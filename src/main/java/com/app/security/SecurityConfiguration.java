@@ -54,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
                 .antMatchers("/facebooklogin", "/facebookprofiledata/**", "/facebook").permitAll()
+                //.antMatchers("/pay/success","/pay/cancel").permitAll()
                 .antMatchers("/error").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/js/**", "/images/**", "/css/**", "/font/**").permitAll()

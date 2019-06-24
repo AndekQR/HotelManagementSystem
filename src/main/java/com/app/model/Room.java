@@ -63,14 +63,14 @@ public class Room implements Serializable {
 
     @Override
     public int hashCode() {
-        int result=id.hashCode();
-        result=31 * result + name.hashCode();
-        result=31 * result + price.hashCode();
-        result=31 * result + capacity.hashCode();
-        result=31 * result + numberOfBath.hashCode();
-        result=31 * result + numberBeds.hashCode();
-        result=31 * result + internet.hashCode();
-        result=31 * result + type.hashCode();
+        int result=((id == null)?0:id.hashCode());
+        result=31 * result + ((name == null)?0:name.hashCode());
+        result=31 * result + ((price == null)?0:price.hashCode());
+        result=31 * result + ((capacity == null)?0:capacity.hashCode());
+        result=31 * result + ((numberOfBath == null)?0:numberOfBath.hashCode());
+        result=31 * result + ((numberBeds == null)?0:numberBeds.hashCode());
+        result=31 * result + ((internet == null)?0:internet.hashCode());
+        result=31 * result + ((type == null)?0: type.hashCode());
         return result;
     }
 

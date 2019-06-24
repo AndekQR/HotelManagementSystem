@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import com.app.helpers.Price;
 import com.app.model.Booking;
 import com.app.model.Room;
 import com.app.service.BookingService;
@@ -62,7 +63,7 @@ public class HotelController {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @RequestMapping(value="/booking", method=RequestMethod.POST)
-    public String saveBooking(@ModelAttribute Room wantedRoomData, @ModelAttribute Booking booking, RedirectAttributes redirectAttributes){
+    public String saveBooking(@ModelAttribute Room wantedRoomData, @ModelAttribute Booking booking, RedirectAttributes redirectAttributes, Model model){
         Room roomToTake;
         Booking bookingToTake = new Booking();
         String result = "fail";
@@ -84,7 +85,7 @@ public class HotelController {
         }
 
         if (!bookingService.checkRoomBookAble(booking.getArrivalTime(), booking.getDepartureTime(), roomToTake)){
-            description = "The selected date is taken.";
+            description = "The selected date is taken or dates are incorrect.";
             redirectAttributes.addFlashAttribute("result", result);
             redirectAttributes.addFlashAttribute("description", description);
             return "redirect:/booking";
@@ -109,9 +110,15 @@ public class HotelController {
         bookingService.saveBooking(bookingToTake);
 
         result = "success";
-        description = "The room has been booked.";
+        description = "A room has been found!";
         redirectAttributes.addFlashAttribute("result", result);
         redirectAttributes.addFlashAttribute("description", description);
-        return "redirect:/booking";
+        logger.info(roomToTake.getPrice().toString());
+        redirectAttributes.addFlashAttribute("book", bookingToTake);
+        redirectAttributes.addFlashAttribute("room", roomToTake);
+        redirectAttributes.addFlashAttribute("price", new Price());
+        redirectAttributes.addFlashAttribute("total", new Price().getTotalPrice(bookingToTake));
+        logger.info(roomToTake.getType().toString());
+        return "redirect:/pay";
     }
 }

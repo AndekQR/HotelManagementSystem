@@ -12,7 +12,7 @@ public class AppController {
     }
 
     @RequestMapping(value={"/contact", "/contact"})
-    public String contact(ModelMap model) {
+    public String contact() {
         return "contact";
     }
 

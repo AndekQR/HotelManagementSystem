@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import com.app.helpers.BookingResult;
 import com.app.helpers.Price;
 import com.app.model.Booking;
 import com.app.model.Room;
@@ -10,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -30,32 +29,35 @@ import java.util.List;
 @Controller
 public class HotelController {
 
-    private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
+    private static final Logger logger=LoggerFactory.getLogger(HotelController.class);
 
     private final RoomService roomService;
     private final BookingService bookingService;
     private final UserServiceImpl userService;
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder){
-        binder.registerCustomEditor(Date.class,
-                new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd\""), true, 10));
-    }
-
     public HotelController(RoomService roomService, BookingService bookingService, UserServiceImpl userService) {
         this.roomService=roomService;
-        this.bookingService = bookingService;
-        this.userService = userService;
+        this.bookingService=bookingService;
+        this.userService=userService;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Date.class,
+                new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd\""), true, 10));
     }
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @RequestMapping(value="/booking", method=RequestMethod.GET)
     public String booking(Model model) {
-        Room wantedRoom = new Room();
-        Booking booking = new Booking();
+        Room wantedRoom=new Room();
+        Booking booking=new Booking();
         model.addAttribute("room", wantedRoom);
         model.addAttribute("booking", booking);
+        List<Booking> bookingList = bookingService.findAllBooking();
+        logger.info(bookingList.toString());
+        model.addAttribute("bookingList", bookingList);
 
         return "booking";
     }
@@ -63,62 +65,31 @@ public class HotelController {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @RequestMapping(value="/booking", method=RequestMethod.POST)
-    public String saveBooking(@ModelAttribute Room wantedRoomData, @ModelAttribute Booking booking, RedirectAttributes redirectAttributes, Model model){
-        Room roomToTake;
-        Booking bookingToTake = new Booking();
-        String result = "fail";
-        String description;
+    public String saveBooking(@ModelAttribute Room wantedRoomData, @ModelAttribute Booking booking, RedirectAttributes redirectAttributes) {
 
-        List<Room> freeRooms = roomService.findAllRooms();
-        roomToTake = freeRooms.stream().filter(x ->
-                (x.getCapacity().equals(booking.getPeople())) &&
-                (x.getNumberBeds().equals(wantedRoomData.getNumberBeds())) &&
-                (x.getInternet() == wantedRoomData.getInternet()) &&
-                (x.getNumberOfBath().equals(wantedRoomData.getNumberOfBath()))
-        ).findFirst().orElse(null);
+        BookingResult bookingResult=bookingService.newBooking(wantedRoomData, booking);
 
-        if (roomToTake == null){
-            description = "No room with the given parameters.";
-            redirectAttributes.addFlashAttribute("result", result);
-            redirectAttributes.addFlashAttribute("description", description);
+        if (bookingResult.result.equals("fail")) {
+            redirectAttributes.addFlashAttribute("result", bookingResult.result);
+            redirectAttributes.addFlashAttribute("description", bookingResult.description);
+            return "redirect:/booking";
+        } else if (bookingResult.result.equals("success")) {
+            redirectAttributes.addFlashAttribute("result", bookingResult.result);
+            redirectAttributes.addFlashAttribute("description", bookingResult.description);
+            redirectAttributes.addFlashAttribute("book", bookingResult.booking);
+            Room room=bookingResult.booking.getRoom();
+            redirectAttributes.addFlashAttribute("room", room);
+            redirectAttributes.addFlashAttribute("price", new Price());
+            redirectAttributes.addFlashAttribute("total", new Price().getTotalPrice(bookingResult.booking));
+            return "redirect:/pay";
+        }
+        else {
+            bookingResult.result = "fail";
+            bookingResult.description = "Unrecognized error.";
+            redirectAttributes.addFlashAttribute("result", bookingResult.result);
+            redirectAttributes.addFlashAttribute("description", bookingResult.description);
             return "redirect:/booking";
         }
 
-        if (!bookingService.checkRoomBookAble(booking.getArrivalTime(), booking.getDepartureTime(), roomToTake)){
-            description = "The selected date is taken or dates are incorrect.";
-            redirectAttributes.addFlashAttribute("result", result);
-            redirectAttributes.addFlashAttribute("description", description);
-            return "redirect:/booking";
-        }
-
-
-        String username;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
-
-        com.app.model.User user = userService.findByEmail(username);
-
-        bookingToTake.setUser(user);
-        bookingToTake.setRoom(roomService.findByName(roomToTake.getName()));
-        bookingToTake.setPeople(booking.getPeople());
-        bookingToTake.setArrivalTime(booking.getArrivalTime());
-        bookingToTake.setDepartureTime(booking.getDepartureTime());
-        bookingService.saveBooking(bookingToTake);
-
-        result = "success";
-        description = "A room has been found!";
-        redirectAttributes.addFlashAttribute("result", result);
-        redirectAttributes.addFlashAttribute("description", description);
-        logger.info(roomToTake.getPrice().toString());
-        redirectAttributes.addFlashAttribute("book", bookingToTake);
-        redirectAttributes.addFlashAttribute("room", roomToTake);
-        redirectAttributes.addFlashAttribute("price", new Price());
-        redirectAttributes.addFlashAttribute("total", new Price().getTotalPrice(bookingToTake));
-        logger.info(roomToTake.getType().toString());
-        return "redirect:/pay";
     }
 }

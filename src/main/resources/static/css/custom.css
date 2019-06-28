@@ -68,19 +68,6 @@
 
 
 /*reservation form*/
-.section {
-    position: relative;
-    height: 50vh;
-}
-
-.section .section-center {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
 
 #booking {
     font-family: 'Josefin Sans', sans-serif;
@@ -301,15 +288,14 @@ i:last-child {
     position: relative;
 }
 .paypal-title {
-     font-size: 14px;
-     color: #505050;
-     vertical-align: baseline;
-     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.6);
- }
+    font-size: 14px;
+    color: #505050;
+    vertical-align: baseline;
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.6);
+}
 
 .paypal-logo {
     display: inline-block;
     text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.6);
     font-size: 20px;
 }
-

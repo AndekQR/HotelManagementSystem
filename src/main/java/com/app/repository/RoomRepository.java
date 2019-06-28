@@ -15,13 +15,16 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     Optional<List<Room>> findByPrice(Integer price);
     Optional<List<Room>> findByCapacity(Integer capacity);
 
-    @Query(value="SELECT m.* from Room AS m JOIN (SELECT DISTINCT d.* FROM Room AS d LEFT OUTER JOIN Booking AS c ON c.room = d.id WHERE (c.room IS NULL) ORDER BY d.name) AS t ON m.id = t.id ", nativeQuery=true)
+    @Query(value="SELECT m.* from Room AS m JOIN (SELECT DISTINCT d.* FROM Room AS d LEFT OUTER JOIN Booking AS c ON c.room = d.id WHERE (c.room IS NULL) ORDER BY d.name)" +
+            " AS t ON m.id = t.id ", nativeQuery=true)
     Optional<List<Room>> findFreeRooms();
 
-    @Query(value="SELECT m.* from Room AS m JOIN (SELECT DISTINCT d.* FROM Room AS d LEFT OUTER JOIN Booking AS c ON c.room = d.id WHERE (c.room IS NULL) ORDER BY d.name) AS t ON m.id = t.id WHERE m.price >= :minimum and m.price <= :maximum", nativeQuery = true)
+    @Query(value="SELECT m.* from Room AS m JOIN (SELECT DISTINCT d.* FROM Room AS d LEFT OUTER JOIN Booking AS c ON c.room = d.id WHERE (c.room IS NULL) ORDER BY d.name)" +
+            " AS t ON m.id = t.id WHERE m.price >= :minimum and m.price <= :maximum", nativeQuery = true)
     Optional<List<Room>> findFreeRooms(@Param("minimum") Integer minPrice, @Param("maximum") Integer maxPrice);
 
-    @Query(value="SELECT m.* from Room AS m JOIN (SELECT DISTINCT d.* FROM Room AS d LEFT OUTER JOIN Booking AS c ON c.room = d.id WHERE (c.room IS NULL) ORDER BY d.name) AS t ON m.id = t.id WHERE  m.price >= :minimum and m.price <= :maximum and m.type = :type", nativeQuery = true)
+    @Query(value="SELECT m.* from Room AS m JOIN (SELECT DISTINCT d.* FROM Room AS d LEFT OUTER JOIN Booking AS c ON c.room = d.id WHERE (c.room IS NULL) ORDER BY d.name)" +
+            " AS t ON m.id = t.id WHERE  m.price >= :minimum and m.price <= :maximum and m.type = :type", nativeQuery = true)
     Optional<List<Room>> findFreeRooms(@Param("minimum") Integer minPrice, @Param("maximum") Integer maxPrice, @Param("type") RoomTypeEnum type);
 
 }

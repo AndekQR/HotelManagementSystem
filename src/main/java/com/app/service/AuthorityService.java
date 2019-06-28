@@ -15,18 +15,24 @@ public class AuthorityService {
         this.daoAuthority=daoAuthority;
     }
 
-    Authority findByType(AuthorityType type){
-        return daoAuthority.findByName(type);
+    public Authority findByType(AuthorityType type){
+        return daoAuthority.findByName(type).orElse(null);
     }
 
-    void saveAuthority(Authority authority){
+    private void saveAuthority(Authority authority){
         daoAuthority.save(authority);
+    }
+
+    public void deleteAuthority(AuthorityType type){
+        daoAuthority.findByName(type).ifPresent(daoAuthority::delete);
     }
 
     public Authority createOrGetAuthority(AuthorityType type){
         Authority authority = findByType(type);
-        if (authority == null)
+        if (authority == null){
             authority = new Authority(type);
+            saveAuthority(authority);
+        }
         return authority;
     }
 }

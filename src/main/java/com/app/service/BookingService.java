@@ -1,8 +1,11 @@
 package com.app.service;
 
+import com.app.helpers.BookingResult;
 import com.app.model.Booking;
 import com.app.model.Room;
 import com.app.repository.BookingRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -12,9 +15,13 @@ import java.util.List;
 public class BookingService {
 
     private final BookingRepository daoRepository;
+    private final RoomService roomService;
+    private final UserService userService;
 
-    public BookingService(BookingRepository daoRepository) {
+    public BookingService(BookingRepository daoRepository, RoomService roomService, UserService userService) {
         this.daoRepository=daoRepository;
+        this.roomService=roomService;
+        this.userService=userService;
     }
 
     public Booking findById(int id){
@@ -29,6 +36,10 @@ public class BookingService {
         return daoRepository.findByRoomId(id).orElse(null);
     }
 
+    public Booking findBooking(Date arrivalTime, Date departureTime, Room room){
+        return daoRepository.findByArrivalTimeAndDepartureTimeAndRoom(arrivalTime, departureTime, room).orElse(null);
+    }
+
     public boolean deleteByRoomId(final int id){
         daoRepository.deleteByRoomId(id);
         return findByRoomId(id) == null;
@@ -41,6 +52,59 @@ public class BookingService {
     public boolean deleteByUserId(final int id){
         daoRepository.deleteByUserId(id);
         return findByUserId(id) == null;
+    }
+
+    public BookingResult newBooking(Room wantedRoomData, Booking booking){
+        Room roomToTake;
+        Booking bookingToTake=new Booking();
+        BookingResult bookingResult = new BookingResult();
+
+        List<Room> freeRooms=roomService.findAllRooms();
+        if (wantedRoomData.getId() != null){
+            roomToTake = wantedRoomData;
+        }
+        else {
+            roomToTake=freeRooms.stream().filter(x ->
+                    (x.getCapacity().equals(booking.getPeople())) &&
+                            (x.getNumberBeds().equals(wantedRoomData.getNumberBeds())) &&
+                            (x.getInternet() == wantedRoomData.getInternet()) &&
+                            (x.getNumberOfBath().equals(wantedRoomData.getNumberOfBath()))
+            ).findFirst().orElse(null);
+        }
+
+        if (roomToTake == null) {
+            bookingResult.result = "fail";
+            bookingResult.description = "No room with the given parameters.";
+            return bookingResult;
+        }
+
+        if (!checkRoomBookAble(booking.getArrivalTime(), booking.getDepartureTime(), roomToTake)) {
+            bookingResult.result = "fail";
+            bookingResult.description = "The selected date is taken or dates are incorrect.";
+            return bookingResult;
+        }
+
+        String username;
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username=((UserDetails) principal).getUsername();
+        } else {
+            username=principal.toString();
+        }
+
+        com.app.model.User user=userService.findByEmail(username);
+
+        bookingToTake.setUser(user);
+        bookingToTake.setRoom(roomService.findByName(roomToTake.getName()));
+        bookingToTake.setPeople(booking.getPeople());
+        bookingToTake.setArrivalTime(booking.getArrivalTime());
+        bookingToTake.setDepartureTime(booking.getDepartureTime());
+        saveBooking(bookingToTake);
+
+        bookingResult.result = "success";
+        bookingResult.description = "A room has been found!";
+        bookingResult.booking = bookingToTake;
+        return bookingResult;
     }
 
     public void saveBooking(final Booking booking){

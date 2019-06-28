@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Booking</title>
     <th:block th:include="/fragments/head.html :: head"/>
+
+
 </head>
 <body class="background">
 <div th:replace="/fragments/header.html :: header"/>
@@ -87,11 +89,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row float-md-right col-md-6">
-                        <p class="flex-center">
-                            <input class="btn btn-primary waves-button waves-light light-blue" type="submit"
-                                   value="Search for the room">
-                        </p>
+                    <div class="row">
+                        <div class="float-md-right col-md-12 d-flex justify-content-center">
+                            <p>
+                                <input class="btn btn-primary waves-button waves-light light-blue" type="submit"
+                                       value="Search for the room">
+                            </p>
+                        </div>
                     </div>
                 </form>
                 <div class="row alert alert-danger" role="alert" th:if="${result == 'fail'}">
@@ -107,9 +111,28 @@
         </div>
     </div>
 
+    <div style="margin-top: 10%" id="dp"></div>
+<div style="display: none" id="dialog-form" title="Create new reservation">
+  <p class="validateTips ">All form fields are required.</p>
+
+  <form>
+    <fieldset>
+      <label for="people">Number of people</label>
+      <input type="number" name="people" id="people" value="2" class="text ui-widget-content ui-corner-all">
+
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+
 </div>
 
 
 <th:block th:insert="/fragments/scripts.html :: my_scripts"/>
+<script src="/static/js/daypilot-all.min.js" th:src="@{/js/daypilot-all.min.js}"></script>
+<script src="/static/js/bookingChart.js" th:src="@{/js/bookingChart.js}"></script>
+
+
 </body>
 </html>

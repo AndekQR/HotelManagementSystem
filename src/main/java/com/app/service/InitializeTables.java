@@ -37,8 +37,8 @@ public class InitializeTables {
 
     private void initialize(){
         if (authorityService.findByType(AuthorityType.ROLE_ADMIN) == null && authorityService.findByType(AuthorityType.ROLE_USER) == null){
-            authorityService.saveAuthority(authorityService.createOrGetAuthority(AuthorityType.ROLE_USER));
-            authorityService.saveAuthority(authorityService.createOrGetAuthority(AuthorityType.ROLE_ADMIN));
+            authorityService.createOrGetAuthority(AuthorityType.ROLE_USER);
+            authorityService.createOrGetAuthority(AuthorityType.ROLE_ADMIN);
         }
 
         if (userService.findByEmail("admin@mail.com") == null){

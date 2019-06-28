@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/pay/success","/pay/cancel").permitAll()
                 .antMatchers("/error").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/js/**", "/images/**", "/css/**", "/font/**").permitAll()
+                .antMatchers("/js/**", "/images/**", "/css/**", "/font/**", "/static/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

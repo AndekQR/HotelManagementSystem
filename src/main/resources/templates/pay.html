@@ -23,8 +23,9 @@
         <div class="row">
             <div class="col-md-12" th:if="${room != null && book != null}">
                 <div class="card border-success mb-3">
-                    <div class="card-header bg-transparent border-success" th:text="${room.type.toString()}"></div>
+                    <div class="card-header bg-transparent border-success"><span>Room details</span></div>
                     <div class="card-body text-success">
+                        <span>Room type: </span><span th:text="${room.type.toString()}"></span>
                         <span>Room number: </span><span th:text="${room.name}"></span><br>
                         <span>Capacity:  </span><span th:text="${room.capacity}"></span><br>
                         <span>Number of beds:  </span><span th:text="${room.numberBeds}"></span><br>
@@ -52,7 +53,7 @@
                         <span>Number of batches:  </span><span
                             th:text="${room.numberOfBath}+'*'+${price.batch}+' PLN'+'='+${room.numberOfBath * price.batch}+' PLN'"></span><br>
                         <span th:if="${room.internet == true}">Internet:  </span><span th:if="${room.internet == true}"
-                                                      th:text="${price.internet}+' PLN'"></span><br><br>
+                                                      th:text="${price.internet}+' PLN'"></span><br>
                         <span>Total: <span th:text="${total}+' PLN'"></span></span>
 
 

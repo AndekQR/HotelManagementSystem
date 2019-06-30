@@ -22,47 +22,27 @@
 
     <div sec:authorize="hasRole('ROLE_ADMIN')" class="row justify-content-center">
         <div class="card text-white bg-primary m-2 col-md-4" style="max-width: 18rem;">
-            <div class="card-body">
-                <h1 class="card-title btn waves-button waves-light btn-lg">Reservation</h1>
-                <hr>
-                <p class="card-text">Select from a wide selection of over 50 rooms in the hotel.</p>
-            </div>
+                <div class="card-body">
+                    <h1 class="card-title btn waves-button waves-light btn-lg">Reservation management</h1>
+                    <hr>
+                    <p class="card-text">Select from a wide selection of over 50 rooms in the hotel.</p>
+                </div>
         </div>
         <div class="card text-white bg-secondary m-2 col-md-4" style="max-width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title btn waves-button waves-light btn-lg">Cards creation</h5>
+                <h5 class="card-title btn waves-button waves-light btn-lg">Booking management</h5>
                 <hr>
-                <p class="card-text">Create new card</p>
+                <p class="card-text">Create, delete or update bookings</p>
             </div>
         </div>
         <div class="card text-white bg-success m-2 col-md-4" style="max-width: 18rem;">
+            <a href="/roomManage">
             <div class="card-body">
                 <h5 class="card-title btn waves-button waves-light btn-lg">Room management</h5>
                 <hr>
                 <p class="card-text">Management of all hotel rooms</p>
             </div>
-        </div>
-        <div class="card text-white bg-danger m-2 col-md-4" style="max-width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title btn waves-button waves-light btn-lg">Resource management</h5>
-                <hr>
-                <p class="card-text">Manage various resources effectively</p>
-            </div>
-        </div>
-        <div class="card text-white bg-warning m-2 col-md-4" style="max-width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title btn waves-button waves-light btn-lg">Restaurant</h5>
-                <hr>
-                <p class="card-text">Business establishment where meals or refreshments may be purchased</p>
-            </div>
-        </div>
-        <div class="card text-white bg-info m-2 col-md-4" style="max-width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title btn waves-button waves-light btn-lg">Secondary card title</h5>
-                <hr>
-                <p class="card-text">Quick sample text to create the card title and make up the body of the card's
-                    content.</p>
-            </div>
+            </a>
         </div>
 
     </div>

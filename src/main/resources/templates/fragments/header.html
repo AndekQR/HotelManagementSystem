@@ -37,7 +37,7 @@
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
                 <li class="nav-item light-blue rounded" sec:authorize="isAuthenticated()">
-                    <a class="nav-link">Logged user: <span sec:authentication="name"></span></a>
+                    <a th:href="@{/getProfile}" class="nav-link">Logged user: <span sec:authentication="name"></span></a>
                 </li>
             </ul>
             <div th:class="float-lg-right" sec:authorize="isAuthenticated()" id="navbar" class="collapse navbar-collapse">

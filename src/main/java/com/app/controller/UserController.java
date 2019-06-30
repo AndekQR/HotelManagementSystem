@@ -51,4 +51,13 @@ public class UserController {
         redirectAttributes.addFlashAttribute("registerResult", result);
         return "redirect:/login";
     }
+
+
+    @RequestMapping(value="/getProfile", method=RequestMethod.GET)
+    public String getProfile(Model model){
+        User user = userServiceImpl.getActualLoggedUser();
+        model.addAttribute("user", user);
+        return "profile";
+    }
+
 }

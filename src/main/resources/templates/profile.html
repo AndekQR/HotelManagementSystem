@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <th:block th:include="/fragments/head.html :: head"/>
+    <link rel="stylesheet" href="/static/css/jquery.dynatable.css" type="text/css" th:href="@{/css/jquery.dynatable.css}">
+</head>
+<body class="background">
+<div th:replace="/fragments/header.html :: header"/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="card-title mb-4">
+                        <div class="d-flex justify-content-start">
+                            <div class="image-container">
+                            </div>
+                            <div class="userData ml-3">
+                                <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"
+                                    th:text="${user.uniqueName}"></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a aria-controls="basicInfo" aria-selected="true" class="nav-link active" data-toggle="tab"
+                                       href="#basicInfo" id="basicInfo-tab" role="tab">Basic Info</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content ml-1" id="myTabContent">
+                                <div aria-labelledby="basicInfo-tab" class="tab-pane fade show active" id="basicInfo"
+                                     role="tabpanel">
+
+
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold; size: 12px;">Full Name</label>
+                                        </div>
+                                        <div class="col-md-8 col-8 d-flex align-items-center">
+                                            <label th:text="${user.firstName} + ' ' + ${user.lastName}"></label>
+                                            <input class="float-sm-right btn btn-primary ml-5" id="fullName"
+                                                   type="button" value="Change full name">
+                                        </div>
+                                    </div>
+                                    <hr/>
+
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Unique name: </label>
+                                        </div>
+                                        <div class="col-md-8 col-6 d-flex align-items-center">
+                                            <label th:text="${user.uniqueName}"></label>
+                                            <input class="float-sm-right btn btn-primary ml-5" id="uniqueName"
+                                                   type="button" value="Change unique name">
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">E-mail: </label>
+                                        </div>
+                                        <div class="col-md-8 col-6 d-flex align-items-center">
+                                            <label th:text="${user.email}"></label>
+                                            <input class="float-sm-right btn btn-primary ml-5" id="email"
+                                                   type="button" value="Change email">
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-sm-3 col-md-2 col-5">
+                                            <label style="font-weight:bold;">Password:</label>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <input class="float-sm-right btn btn-primary ml-5"
+                                                   type="button" value="Change password" id="password">
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table id="bookingTable" class="table table-bordered table-dark mt-3">
+            <thead>
+                <tr>
+                    <th>roomName</th>
+                    <th>people</th>
+                    <th>arrivalTime</th>
+                    <th>departureTime</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <form style="display: none" id="oneFieldForm">
+        <input id="newValue" placeholder="Enter new value">
+    </form>
+    <form style="display: none" id="twoFieldsForm">
+        <input id="newValueOne" placeholder="Enter new password">
+        <input id="newValueTwo" placeholder="Enter your password again.">
+    </form>
+</div>
+
+
+<th:block th:insert="/fragments/scripts.html :: my_scripts"/>
+<script th:src="@{/js/jquery.dynatable.js}"></script>
+<script th:src="@{/js/changeUserData.js}"></script>
+
+</body>
+</html>

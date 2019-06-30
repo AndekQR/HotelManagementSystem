@@ -53,14 +53,34 @@ $(function () {
             data: JSON.stringify(params),
             success: function (data) {
                 dp.events.add(new DayPilot.Event(data));
+                alert(JSON.stringify(data));
                 dp.message("Reservation created");
+                toPay(data);
             },
             contentType: "application/json",
             dataType: 'json',
             cache: false,
             timeout: 600000,
-            error: function (e) {
-                alert("Error " + e.val());
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
+        });
+    }
+
+    function toPay(data) {
+        $.ajax({
+            type: 'POST',
+            url: '/dp/toPay',
+            data: JSON.stringify(data),
+            success: function(data){
+                alert(JSON.stringify(data));
+            },
+            contentType: "application/json",
+            dataType: 'json',
+            cache: false,
+            timeout: 600000,
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
             }
         });
     }
@@ -95,14 +115,10 @@ $(function () {
         });
     }
 
-
-
-
     dp.onTimeRangeSelected = function (args) {
         createDialog(args);
         findForm(args);
         dialog.dialog("open");
-        // dp.events.load("/dp/getEvents");
 
     };
 

@@ -44,11 +44,12 @@ public class PaymentController {
     }
 
     @RequestMapping(value="/pay", method=RequestMethod.POST)
-    public String pay(@ModelAttribute("book") Booking bookingID, HttpServletRequest request, RedirectAttributes redirectAttributes){
+    public String pay(@ModelAttribute("book") Booking bookingOnlyId, HttpServletRequest request, RedirectAttributes redirectAttributes){
         String cancelUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_CANCEL_URL;
         String successUrl = URLUtils.getBaseURl(request) + "/" + PAYPAL_SUCCESS_URL;
         Price price = new Price();
-        Booking booking = bookingService.findById(bookingID.getId());
+        Booking booking = bookingService.findById(bookingOnlyId.getId());
+
 
         Double total = price.getTotalPrice(booking);
         try {

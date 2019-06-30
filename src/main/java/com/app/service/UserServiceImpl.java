@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -99,6 +100,18 @@ public class UserServiceImpl implements UserService {
 
     public User newUser(){
         return new User();
+    }
+
+    @Override
+    public User getActualLoggedUser(){
+        String username;
+        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            username=((UserDetails) principal).getUsername();
+        } else {
+            username=principal.toString();
+        }
+        return findByEmail(username);
     }
 
     @Override

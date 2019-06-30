@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <th:block th:include="/fragments/head.html :: head"/>
+    <link href="/static/css/jquery.dynatable.css" rel="stylesheet" th:href="@{/css/jquery.dynatable.css}"
+          type="text/css">
+</head>
+<body class="background">
+<div th:replace="/fragments/header.html :: header"/>
+
+<div class="container">
+
+    <div class="card border-primary mb-3">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button aria-controls="collapseOne" aria-expanded="false" class="btn btn-primary" data-target="#collapseOne"
+                        data-toggle="collapse">
+                    Bookings
+                </button>
+                <button aria-controls="collapseTwo" aria-expanded="false" class="btn btn-primary" data-target="#collapseTwo"
+                        data-toggle="collapse">
+                    Rooms
+                </button>
+                <button aria-controls="collapseThree" aria-expanded="false" class="btn btn-primary"
+                        data-target="#collapseThree" data-toggle="collapse">
+                    Users
+                </button>
+            </h2>
+        </div>
+
+
+    <div aria-labelledby="headingOne" class="collapse" id="collapseOne">
+        <div class="card-body">
+            <table class="table table-bordered table-dark mt-3" id="bookingTable">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>userId</th>
+                    <th>roomId</th>
+                    <th>roomName</th>
+                    <th>people</th>
+                    <th>arrivalTime</th>
+                    <th>departureTime</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div aria-labelledby="headingTwo" class="collapse" id="collapseTwo">
+        <div class="card-body">
+            <table class="table table-bordered table-dark mt-3" id="roomTable">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>capacity</th>
+                    <th>internet</th>
+                    <th>name</th>
+                    <th>numberBeds</th>
+                    <th>numberOfBath</th>
+                    <th>price</th>
+                    <th>type</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div aria-labelledby="headingThree" class="collapse" id="collapseThree">
+        <div class="card-body">
+            <table class="table table-bordered table-dark mt-3" id="userTable">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>email</th>
+                    <th>firstName</th>
+                    <th>lastName</th>
+                    <th>uniqueName</th>
+                    <th>userType</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+<th:block th:insert="/fragments/scripts.html :: my_scripts"/>
+<script th:src="@{/js/jquery.dynatable.js}"></script>
+<script th:src="@{/js/roomManagement.js}"></script>
+</body>
+</html>

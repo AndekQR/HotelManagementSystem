@@ -1,5 +1,6 @@
-package com.app.controller;
+package com.app.controller.rest;
 
+import com.app.controller.PaymentController;
 import com.app.helpers.BookingResult;
 import com.app.helpers.dp.Event;
 import com.app.helpers.dp.EventCreateParams;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +30,12 @@ public class DayPilotController {
     private static final Logger logger = LoggerFactory.getLogger(DayPilotController.class);
     private final BookingService bookingService;
     private final RoomService roomService;
+    private final PaymentController paymentController;
 
-    public DayPilotController(BookingService bookingService, RoomService roomService) {
+    public DayPilotController(BookingService bookingService, RoomService roomService, PaymentController paymentController) {
         this.bookingService=bookingService;
         this.roomService=roomService;
+        this.paymentController=paymentController;
     }
 
     @RequestMapping(value="/getRowsData")
@@ -89,4 +94,12 @@ public class DayPilotController {
         }
 
     }
+
+    @RequestMapping(value="/toPay", method=RequestMethod.POST)
+    public void toPay(HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestBody Event event){
+        Booking booking = bookingService.findById(event.id);
+        paymentController.pay(booking, request, redirectAttributes);
+
+    }
+
 }

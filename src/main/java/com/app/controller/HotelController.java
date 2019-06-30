@@ -62,6 +62,8 @@ public class HotelController {
         return "booking";
     }
 
+
+
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @RequestMapping(value="/booking", method=RequestMethod.POST)

@@ -3,9 +3,8 @@ package com.app.service;
 import com.app.helpers.BookingResult;
 import com.app.model.Booking;
 import com.app.model.Room;
+import com.app.model.User;
 import com.app.repository.BookingRepository;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -84,15 +83,8 @@ public class BookingService {
             return bookingResult;
         }
 
-        String username;
-        Object principal=SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            username=((UserDetails) principal).getUsername();
-        } else {
-            username=principal.toString();
-        }
+        User user = userService.getActualLoggedUser();
 
-        com.app.model.User user=userService.findByEmail(username);
 
         bookingToTake.setUser(user);
         bookingToTake.setRoom(roomService.findByName(roomToTake.getName()));
